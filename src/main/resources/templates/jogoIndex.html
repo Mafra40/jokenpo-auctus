@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<style>
+.divTable {
+  text-align: center;
+  border: 1px;
+  border-style: solid;
+  width: 400px;
+  height: 400px;
+}
+
+.divForm {
+  text-align: center;
+  border: 1px;
+  border-style: solid;
+  margin-left: 410px;
+  margin-top: -420px;
+  width: 400px;
+  height: 400px;
+  float: left;
+
+}
+</style>
+<body>
+<div class="divTable">
+    <table>
+        <th>
+        <td>Id</td>
+        <td>Nome Jogador</td>
+        <td>Jogada</td>
+        <td>Opções</td>
+
+        </th>
+        <tr th:each="jogo: ${jogadores}">
+            <td th:text="${jogo.id}" />
+            <td th:text="${jogo.nome}" />
+            <td th:text="${jogo.jogada}" />
+            <td>
+                <a th:href="@{'/app/jokenpo/remover/'+${jogo.id}}">Remover</a>
+            </td>
+        </tr>
+    </table>
+</div>
+<br/>
+<div class="divForm">
+    <form method="post" th:action="@{/app/jokenpo/add}" th:object="${jogador}" name="incluirJogador">
+        <labe>Nome Jogador</labe>
+        <input type="text" th:field="*{nome}" value="Jogador 1"><br/>
+        <labe>Jogada</labe>
+        <select  th:field="*{jogada}">
+            <optgroup label="Jogadas">
+                <option th:value="Pedra" th:text="Pedra"></option>
+                <option th:value="Papel" th:text="Papel"></option>
+                <option th:value="Tesoura" th:text="Tesoura"></option>
+            </optgroup>
+
+        </select>
+        <input type="submit" value="Add" name="incluir"/>
+
+        <br/>
+        <br/>
+        <br/>
+        <button> <a th:href="@{'/app/jokenpo/partida'}">Resultado</a></button>
+        <button> <a th:href="@{'/app/jokenpo/resetar'}">Resetar</a></button>
+    </form>
+</div>
+
+<div>
+
+    <label><p th:text="${resultado} ?: ''"></p> </label>
+</div>
+
+</body>
+</html>
